@@ -1,0 +1,19 @@
+[submodule "vendor/spdlog"]
+	path = vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "vendor/fmt"]
+	path = vendor/fmt
+	url = https://github.com/fmtlib/fmt
+[submodule "vendor/metamod-source"]
+	path = vendor/metamod-source
+	url = https://github.com/alliedmodders/metamod-source
+[submodule "vendor/protobufs"]
+	path = vendor/protobufs
+	url = https://github.com/SteamDatabase/Protobufs
+[submodule "vendor/dyncall"]
+	path = vendor/dyncall
+	url = https://github.com/LWJGL-CI/dyncall
+[submodule "vendor/hl2sdk-cs2"]
+	path = vendor/hl2sdk-cs2
+	url = https://github.com/alliedmodders/hl2sdk
+	branch = cs2
