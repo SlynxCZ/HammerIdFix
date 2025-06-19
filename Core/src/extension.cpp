@@ -32,7 +32,7 @@ namespace Core {
         g_SMAPI->AddListener(this, this);
         g_pluginRegistered = true;
 
-        ACC_CORE_INFO("- [ [CorePlugin] loaded. ] -");
+        CORE_INFO("- [ [CorePlugin] loaded. ] -");
 
         return true;
     }
@@ -41,7 +41,7 @@ namespace Core {
         Log::Close();
         g_pluginRegistered = false;
 
-        ACC_CORE_INFO("- [ [CorePlugin] unloaded. ] -");
+        CORE_INFO("- [ [CorePlugin] unloaded. ] -");
 
         return true;
     }
@@ -50,9 +50,9 @@ namespace Core {
         std::thread([] {
             std::this_thread::sleep_for(std::chrono::milliseconds(3000));
             if (g_pluginRegistered)
-                ACC_CORE_INFO("- [ [Core] is active and linked. ] -");
+                CORE_INFO("- [ [Core] is active and linked. ] -");
             else
-                ACC_CORE_ERROR("- [ [Core] plugin did not register itself. ] -");
+                CORE_ERROR("- [ [Core] plugin did not register itself. ] -");
         }).detach();
     }
 
