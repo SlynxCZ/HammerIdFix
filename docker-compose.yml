@@ -1,0 +1,27 @@
+﻿version: "3.9"
+
+services:
+  builder:
+    build:
+      context: ./docker
+    volumes:
+      - ./:/project
+    working_dir: /project
+    environment:
+      HL2SDKCS2: /project/vendor/hl2sdk-cs2
+      MMSOURCE112: /project/vendor/metamod-source
+    command: >
+      bash -c "
+        mkdir -p /usr/local/share/lua/5.3/clion
+        cp -r /project/premake/clion/* /usr/local/share/lua/5.3/clion/
+        mkdir -p /usr/local/share/lua/5.3/cmake
+        cp -r /project/premake/cmake/* /usr/local/share/lua/5.3/cmake/
+        premake5 gmake2 &&
+        cd build &&
+        make -j$(nproc) &&
+        cd ../ &&
+        premake5 clion &&
+        mkdir -p output &&
+        cp -r /project/configs/addons/metamod/* /project/output &&
+        cp -r /project/Core/bin/Debug/* /project/output
+      "

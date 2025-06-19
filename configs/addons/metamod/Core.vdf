@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"Core"
+	"file"	"addons/Core/bin/linuxsteamrt64/Core"
+}
