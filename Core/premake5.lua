@@ -13,10 +13,10 @@ project "Core"
    targetprefix ""
 
    files {
-      path.join("src", "**.h"),
-      path.join("src", "**.cpp"),
-      path.join(protoOutDir, "**.pb.cc"),
-      path.join(protoOutDir, "**.pb.h")
+      path.join("src", "**", "*.h"),
+      path.join("src", "**", "*.cpp"),
+      path.join(protoOutDir, "**", "*.pb.cc"),
+      path.join(protoOutDir, "**", "*.pb.h")
    }
 
    vpaths {
@@ -80,6 +80,7 @@ project "Core"
    includedirs {
       protoOutDir,
       protoInputDir,
+      path.join(workspaceRoot, "vendor", "nlohmann"),
       path.join(workspaceRoot, "vendor", "moodycamel"),
       path.join(workspaceRoot, "vendor", "spdlog", "include"),
       path.join(workspaceRoot, "vendor", "funchook", "include"),
