@@ -13,6 +13,8 @@ project "Core"
    targetprefix ""
 
    files {
+      path.join("src", "**.h"),
+      path.join("src", "**.cpp"),
       path.join("src", "**", "*.h"),
       path.join("src", "**", "*.cpp"),
       path.join(protoOutDir, "**", "*.pb.cc"),

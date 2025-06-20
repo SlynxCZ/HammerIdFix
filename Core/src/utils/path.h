@@ -4,17 +4,16 @@
 //
 #pragma once
 
-#include <public/eiface.h>
+#include <eiface.h>
 #include <string>
 
 namespace Core {
     class Utils {
+    public:
         static std::string gameDirectory;
 
-        static std::string GameDirectory()
-        {
-            if (gameDirectory.empty())
-            {
+        static std::string GameDirectory() {
+            if (gameDirectory.empty()) {
                 CBufferStringGrowable<255> gamePath;
                 g_pEngineServer->GetGameDir(gamePath);
                 gameDirectory = std::string(gamePath.Get());

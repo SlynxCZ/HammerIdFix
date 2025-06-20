@@ -46,19 +46,6 @@ namespace Core {
         moodycamel::ConcurrentQueue<std::function<void()> > m_nextTasks;
     };
 
-    class Utils {
-    public:
-        static std::string GameDirectory();
-
-        static std::string GetRootDirectory();
-
-        static std::string PluginsDirectory();
-
-        static std::string ConfigsDirectory();
-
-        static std::string GamedataDirectory();
-    };
-
     extern CorePlugin gPlugin;
 
 #endif //_INCLUDE_METAMOD_SOURCE_STUB_PLUGIN_H_

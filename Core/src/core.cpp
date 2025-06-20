@@ -61,14 +61,35 @@ namespace Core {
     bool CorePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late) {
         PLUGIN_SAVEVARS();
 
-        GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2Server, ISource2Server, SOURCE2SERVER_INTERFACE_VERSION);
-        GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
-        GET_V_IFACE_CURRENT(GetEngineFactory, g_pEngineServer, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
-        GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
+        globals::ismm = ismm;
+        globals::gameThreadId = std::this_thread::get_id();
 
         Log::Init();
 
+        GET_V_IFACE_CURRENT(GetServerFactory, globals::server, ISource2Server, SOURCE2SERVER_INTERFACE_VERSION);
+        GET_V_IFACE_CURRENT(GetEngineFactory, globals::engine, IVEngineServer, INTERFACEVERSION_VENGINESERVER);
+        GET_V_IFACE_CURRENT(GetEngineFactory, globals::cvars, ICvar, CVAR_INTERFACE_VERSION);
+
+        auto gamedata_path = std::string(Utils::GamedataDirectory() + "/gamedata.json");
+        globals::gameConfig = new CGameConfig(gamedata_path);
+        char conf_error[255] = "";
+
+        if (!globals::gameConfig->Init(conf_error, sizeof(conf_error)))
+        {
+            CORE_ERROR("Could not read \'{}\'. Error: {}", gamedata_path, conf_error);
+            return false;
+        }
+
+        globals::Initialize();
+        CORE_INFO("- [ Globals loaded. ] -");
+
+        globals::mmPlugin = &gPlugin;
+
         g_SMAPI->AddListener(this, this);
+
+        g_pCVar = globals::cvars;
+        ConVar_Register(FCVAR_RELEASE | FCVAR_CLIENT_CAN_EXECUTE | FCVAR_GAMEDLL);
+
         g_pluginRegistered = true;
 
         CORE_INFO("- [ [CorePlugin] loaded. ] -");
