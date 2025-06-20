@@ -1,6 +1,8 @@
-// core.cpp
+//
+// Created by Michal Přikryl on 12.06.2025.
+// Copyright (c) 2025 slynxcz. All rights reserved.
+//
 #include "core.h"
-#include "utils/log.h"
 #include <thread>
 #include <chrono>
 #include <utility>
@@ -8,12 +10,14 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
-
-#include <funchook.h>
-#include <entity2/entitysystem.h>
-#include <iserver.h>
-#include <igameeventsystem.h>
-#include <tier0/vprof.h>
+#include "utils/log.h"
+#include "utils/gameconfig.h"
+#include "utils/path.h"
+#include "entity2/entitysystem.h"
+#include "igameeventsystem.h"
+#include "cs2_sdk/interfaces/cs2_interfaces.h"
+#include "iserver.h"
+#include "tier0/vprof.h"
 
 namespace Core {
     CorePlugin gPlugin;
@@ -52,6 +56,7 @@ namespace Core {
 
     std::unordered_map<uint64_t, CorePlayersDataStruct> CorePlayersData;
     PluginDataStruct PluginData;
+    bool g_pluginRegistered;
 
     bool CorePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late) {
         PLUGIN_SAVEVARS();

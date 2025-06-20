@@ -4,33 +4,18 @@
 //
 #include "globals.h"
 #include "Core/src/core.h"
-#include "Core/src/managers/player_manager.h"
-#include "core/tick_scheduler.h"
 #include "iserver.h"
-#include "Core/src/managers/event_manager.h"
-#include "Core/src/scripting/callback_manager.h"
-#include "Core/src/scripting/dotnet_host.h"
-#include "timer_system.h"
 
-#include <ISmmPlugin.h>
 #include <sourcehook/sourcehook.h>
 #include <sourcehook/sourcehook_impl.h>
 
 #include "log.h"
 #include "virtual.h"
 #include "memory.h"
-#include "Core/src/managers/con_command_manager.h"
-#include "Core/src/managers/chat_manager.h"
 #include "memory_module.h"
-#include "Core/src/interfaces/cs2_interfaces.h"
-#include "Core/src/managers/entity_manager.h"
-#include "Core/src/managers/server_manager.h"
-#include "Core/src/managers/voice_manager.h"
-#include "Core/src/managers/usermessage_manager.h"
-#include <public/game/server/iplayerinfo.h>
-#include <public/entity2/entitysystem.h>
-
-#include <funchook.h>
+#include "Core/src/cs2_sdk/interfaces/cs2_interfaces.h"
+#include <game/server/iplayerinfo.h>
+#include <entity2/entitysystem.h>
 
 namespace Core {
 
@@ -69,11 +54,10 @@ IPhysicsCollision* physicsCollision = nullptr;
 IPhysicsSurfaceProps* physicsSurfaceProps = nullptr;
 IMDLCache* modelCache = nullptr;
 IVoiceServer* voiceServer = nullptr;
-CDotNetManager dotnetManager;
 ICvar* cvars = nullptr;
 ISource2Server* server = nullptr;
 CGlobalEntityList* globalEntityList = nullptr;
-CorePlugin* mmPlugin = nullptr;
+using CorePlugin = Core::CorePlugin;
 SourceHook::Impl::CSourceHookImpl source_hook_impl;
 SourceHook::ISourceHook* source_hook = &source_hook_impl;
 ISmmAPI* ismm = nullptr;
@@ -81,19 +65,6 @@ CGameEntitySystem* entitySystem = nullptr;
 CCoreConfig* coreConfig = nullptr;
 CGameConfig* gameConfig = nullptr;
 ISource2GameEntities* gameEntities = nullptr;
-
-// Custom Managers
-CallbackManager callbackManager;
-EventManager eventManager;
-PlayerManager playerManager;
-TimerSystem timerSystem;
-ConCommandManager conCommandManager;
-EntityManager entityManager;
-ChatManager chatManager;
-ServerManager serverManager;
-VoiceManager voiceManager;
-TickScheduler tickScheduler;
-UserMessageManager userMessageManager;
 
 bool gameLoopInitialized = false;
 GetLegacyGameEventListener_t* GetLegacyGameEventListener = nullptr;
@@ -126,21 +97,7 @@ void Initialize()
     if (GameEventManagerInit == nullptr)
     {
         CORE_ERROR("Failed to find signature for \'GameEventManagerInit\'");
-        return;
     }
-
-    auto m_hook = funchook_create();
-    funchook_prepare(m_hook, (void**)&GameEventManagerInit, (void*)&DetourGameEventManagerInit);
-    funchook_install(m_hook, 0);
-}
-
-void DetourGameEventManagerInit(IGameEventManager2* pGameEventManager)
-{
-    gameEventManager = pGameEventManager;
-
-    GameEventManagerInit(pGameEventManager);
-
-    eventManager.OnAllInitialized_Post();
 }
 
 int source_hook_pluginid = 0;
