@@ -48,6 +48,9 @@ namespace Core {
 
     extern CorePlugin gPlugin;
 
+    static void Hook_ProcessConnectionlessPacket(void* thisptr, void* netpacket);
+    static void (*orig_ProcessConnectionlessPacket)(void* thisptr, void* netpacket);
+
 #endif //_INCLUDE_METAMOD_SOURCE_STUB_PLUGIN_H_
 }
 

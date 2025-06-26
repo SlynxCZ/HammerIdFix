@@ -3,6 +3,7 @@
 // Copyright (c) 2025 slynxcz. All rights reserved.
 //
 #include "core.h"
+
 #include <thread>
 #include <chrono>
 #include <utility>
@@ -85,6 +86,7 @@ namespace Core {
 
         if (!globals::gameConfig->Init(conf_error, sizeof(conf_error))) {
             CORE_ERROR("Could not read \'{}\'. Error: {}", gamedata_path, conf_error);
+            g_pluginRegistered = false;
             return false;
         }
 

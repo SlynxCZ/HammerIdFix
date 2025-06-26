@@ -102,21 +102,31 @@ project "Core"
    }
 
    function generateProtocCommands()
-      local commands = {}
-      for _, file in ipairs(protoFiles) do
-         local inputFile = path.getabsolute(path.join(protoInputDir, file))
-         local command = string.format(
-            "%s --proto_path=%s --proto_path=%s --proto_path=%s --cpp_out=%s %s",
-            sdkProtoc,
-            path.getabsolute(protoInputDir),
-            path.join(SDK_PATH, "thirdparty", "protobuf-3.21.8", "src"),
-            path.join(SDK_PATH, "game", "shared"),
-            path.getabsolute(protoOutDir),
-            inputFile
-         )
-         table.insert(commands, command)
-      end
-      return commands
+       local commands = {}
+
+       for _, file in ipairs(protoFiles) do
+           local inputFile = path.getabsolute(path.join(protoInputDir, file))
+
+           local fileContent = io.readfile(inputFile)
+           if not fileContent:find("syntax%s*=%s*\"proto2\"%s*;") then
+               fileContent = 'syntax = "proto2";\n\n' .. fileContent
+               io.writefile(inputFile, fileContent)
+           end
+
+           local command = string.format(
+                   "%s --proto_path=%s --proto_path=%s --proto_path=%s --cpp_out=%s %s",
+                   sdkProtoc,
+                   path.getabsolute(protoInputDir),
+                   path.join(SDK_PATH, "thirdparty", "protobuf-3.21.8", "src"),
+                   path.join(SDK_PATH, "game", "shared"),
+                   path.getabsolute(protoOutDir),
+                   inputFile
+           )
+
+           table.insert(commands, command)
+       end
+
+       return commands
    end
 
    prebuildcommands(generateProtocCommands())

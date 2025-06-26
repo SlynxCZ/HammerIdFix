@@ -1,14 +1,13 @@
 ﻿{
-  "CBaseServer::RejectConnection": {
-    "signatures": {
-      "library": "server",
-      "linux": "48 8d 3d ?? ?? ?? ?? 31 c0 e8 ?? ?? ?? ?? c6 83 0c 01 00 00 00 48 83 c4 10 5b 41 5c 41 5d 41 5e 5d c3"
+  "CBaseServer_RejectConnection": {
+    "offsets": {
+      "linux": 259
     }
   },
   "CBaseServer::ProcessConnectionlessPacket": {
     "signatures": {
       "library": "server",
-      "linux": "80 fb 71 75 70 4c 8d bd ?? ?? ?? ?? 31 d2 31 c9 48 c7 85 ?? ?? ?? ?? 00 00 00 00 48 b8 ?? ?? ?? ?? ?? ?? ?? ?? 4c 89 fe 4c 89 f7 48 89 85 ?? ?? ?? ??"
+      "linux": "55 b9 FF FF FF FF 48 89 E5 41 57 41 56 49 89 D6 BA 00 02 00 00"
     }
   },
   "UTIL_ClientPrintAll": {
