@@ -29,6 +29,7 @@
 #include "dbg.h"
 #include "log.h"
 #include "metamod_oslink.h"
+#include <funchook.h>
 
 namespace Core::modules {
     void Initialize() {

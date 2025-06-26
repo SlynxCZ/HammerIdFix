@@ -4,6 +4,7 @@
 //
 #include "gameconfig.h"
 #include "memory_module.h"
+#include <funchook.h>
 
 void* FindSignature(const char* moduleName, const char* bytesStr)
 {

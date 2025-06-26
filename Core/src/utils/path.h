@@ -7,22 +7,19 @@
 #include <eiface.h>
 #include <string>
 
-namespace Core {
-    class Utils {
-    public:
-        static std::string gameDirectory;
+namespace Core::Utils {
+    static std::string gameDirectory;
 
-        static std::string GameDirectory() {
-            if (gameDirectory.empty()) {
-                CBufferStringGrowable<255> gamePath;
-                g_pEngineServer->GetGameDir(gamePath);
-                gameDirectory = std::string(gamePath.Get());
-            }
-
-            return gameDirectory;
+    inline std::string GameDirectory() {
+        if (gameDirectory.empty()) {
+            CBufferStringGrowable<255> gamePath;
+            globals::engine->GetGameDir(gamePath);
+            gameDirectory = std::string(gamePath.Get());
         }
 
-        static std::string GetRootDirectory() { return GameDirectory() + "/addons/Core"; }
-        static std::string GamedataDirectory() { return GameDirectory() + "/addons/Core/gamedata"; }
-    };
-} // namespace core
+        return gameDirectory;
+    }
+
+    inline std::string GetRootDirectory() { return GameDirectory() + "/addons/Core"; }
+    inline std::string GamedataDirectory() { return GameDirectory() + "/addons/Core/gamedata"; }
+}// namespace core

@@ -4,6 +4,8 @@
 //
 #include "gameconfig.h"
 
+#include <funchook.h>
+
 #include <fstream>
 
 #include "log.h"

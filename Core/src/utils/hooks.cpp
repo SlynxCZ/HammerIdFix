@@ -3,8 +3,8 @@
 // Copyright (c) 2025 slynxcz. All rights reserved.
 //
 #include "hooks.h"
-#include <funchook.h>
 #include <igameevents.h>
+#include <funchook.h>
 
 static std::unordered_map<std::string, std::function<void(const CCommand&)>> g_CommandHooks;
 static std::unordered_map<std::string, std::function<void(IGameEvent*)>> g_GameEventHooks;

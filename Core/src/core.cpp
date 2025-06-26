@@ -18,6 +18,15 @@
 #include "cs2_sdk/interfaces/cs2_interfaces.h"
 #include "iserver.h"
 #include "tier0/vprof.h"
+#include <sourcehook.h>
+#include <funchook.h>
+
+PLUGIN_EXPOSE(CorePlugin, Core::gPlugin);
+
+CGameEntitySystem *GameEntitySystem() { return nullptr; }
+
+class GameSessionConfiguration_t {
+};
 
 namespace Core {
     CorePlugin gPlugin;
@@ -74,8 +83,7 @@ namespace Core {
         globals::gameConfig = new CGameConfig(gamedata_path);
         char conf_error[255] = "";
 
-        if (!globals::gameConfig->Init(conf_error, sizeof(conf_error)))
-        {
+        if (!globals::gameConfig->Init(conf_error, sizeof(conf_error))) {
             CORE_ERROR("Could not read \'{}\'. Error: {}", gamedata_path, conf_error);
             return false;
         }
@@ -84,8 +92,6 @@ namespace Core {
         CORE_INFO("- [ Globals loaded. ] -");
 
         globals::mmPlugin = &gPlugin;
-
-        g_SMAPI->AddListener(this, this);
 
         g_pCVar = globals::cvars;
         ConVar_Register(FCVAR_RELEASE | FCVAR_CLIENT_CAN_EXECUTE | FCVAR_GAMEDLL);
@@ -126,5 +132,4 @@ namespace Core {
     const char *CorePlugin::GetVersion() { return "1.0.0"; }
     const char *CorePlugin::GetDate() { return __DATE__; }
     const char *CorePlugin::GetLogTag() { return "CORE"; }
-
 }

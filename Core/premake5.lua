@@ -60,10 +60,10 @@ project "Core"
    filter {}
 
    links {
-      "distorm",
       "spdlog",
       "funchook",
-      "protobuf"
+      "protobuf",
+      "distorm"
    }
 
    defines {

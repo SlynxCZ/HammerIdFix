@@ -43,7 +43,8 @@ class IGameEventListener2;
 class CSchemaSystem;
 
 namespace Core {
-class EntityListener;
+    class CorePlugin;
+    class EntityListener;
 class EventManager;
 class UserMessageManager;
 class ConCommandManager;
