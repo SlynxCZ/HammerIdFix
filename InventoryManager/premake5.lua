@@ -63,7 +63,8 @@ project "InventoryManager"
       "spdlog",
       "funchook",
       "protobuf",
-      "distorm"
+      "distorm",
+      "ixwebsocket"
    }
 
    defines {
@@ -88,7 +89,8 @@ project "InventoryManager"
       path.join(workspaceRoot, "vendor", "funchook", "include"),
       path.join(workspaceRoot, "vendor", "fmt", "include"),
       path.join(workspaceRoot, "vendor", "hl2sdk-cs2", "game", "shared"),
-      path.join(workspaceRoot, "vendor", "hl2sdk-cs2", "thirdparty", "protobuf-3.21.8", "src")
+      path.join(workspaceRoot, "vendor", "hl2sdk-cs2", "thirdparty", "protobuf-3.21.8", "src"),
+      path.join(workspaceRoot, "vendor", "ixwebsocket", "ixwebsocket"),
    }
 
    os.mkdir(protoOutDir)

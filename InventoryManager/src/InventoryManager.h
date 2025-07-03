@@ -44,6 +44,9 @@ namespace InventoryManager {
 
     private:
         moodycamel::ConcurrentQueue<std::function<void()> > m_nextTasks;
+        void GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+        void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+        void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszReason, uint64 xuid, const char *pszNetworkID);
     };
 
     extern InventoryManagerPlugin gPlugin;

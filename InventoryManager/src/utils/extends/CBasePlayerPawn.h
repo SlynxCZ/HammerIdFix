@@ -7,6 +7,8 @@
 #include "CBaseModelEntity.h"
 #include "services.h"
 
+class CBasePlayerController;
+
 namespace InventoryManager {
     class CBasePlayerPawn : public CBaseModelEntity
     {

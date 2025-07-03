@@ -17,3 +17,9 @@
 	path = vendor/hl2sdk-cs2
 	url = https://github.com/alliedmodders/hl2sdk
 	branch = cs2
+[submodule "vendor/ixwebsocket"]
+	path = vendor/ixwebsocket
+	url = https://github.com/machinezone/IXWebSocket.git
+[submodule "vendor/OpenSSL"]
+	path = vendor/OpenSSL
+	url = https://github.com/openssl/openssl.git

@@ -58,6 +58,30 @@ namespace InventoryManager {
 
         SCHEMA_FIELD(int32_t, m_iCompetitiveWins);
 
+        std::vector<CCSWeaponBase*> GetWeapons() {
+            std::vector<CCSWeaponBase*> weapons;
+            auto pawn = GetPlayerPawn();
+            if (!pawn || !pawn->m_pWeaponServices || !pawn->m_pWeaponServices->m_hMyWeapons)
+                return weapons;
+
+            const auto& myWeapons = *pawn->m_pWeaponServices->m_hMyWeapons;
+
+            for (int i = 0; i < myWeapons.Count(); ++i) {
+                const auto& handle = myWeapons[i];
+                if (!handle.IsValid()) continue;
+
+                auto ent = reinterpret_cast<CBaseEntity*>(
+                    globals::entitySystem->GetEntityInstance(CEntityIndex(handle.GetEntryIndex()))
+                );
+
+                if (auto* weapon = dynamic_cast<CCSWeaponBase*>(ent)) {
+                    weapons.push_back(weapon);
+                }
+            }
+
+            return weapons;
+        }
+
         static CCSPlayerController *FromUserId(int userid) {
             for (int i = 0; i < globals::globalVars->maxClients; ++i) {
                 CCSPlayerController *controller = FromSlot(i);

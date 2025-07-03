@@ -58,8 +58,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			static const auto m_key =																						\
 				schema::GetOffset(ThisClassName, datatable_hash, #varName, prop_hash);										\
 																															\
-			static const size_t offset = offsetof(ThisClass, varName);														\
-			ThisClass *pThisClass = (ThisClass *)((byte *)this - offset);													\
+			ThisClass *pThisClass = (ThisClass *)((byte *)this - m_key.offset);												\
 																															\
 			return *reinterpret_cast<std::add_pointer_t<type>>(																\
 				(uintptr_t)(pThisClass) + m_key.offset + extra_offset);														\
