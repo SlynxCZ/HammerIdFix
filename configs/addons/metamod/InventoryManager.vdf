@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"InventoryManager"
+	"file"	"addons/InventoryManager/bin/linuxsteamrt64/InventoryManager"
+}

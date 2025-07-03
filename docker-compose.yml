@@ -23,6 +23,6 @@ services:
         premake5 clion &&
         mkdir -p output &&
         cp -r /project/configs/addons/metamod/* /project/output &&
-        cp -r /project/configs/addons/Core/* /project/output &&
-        cp -r /project/Core/bin/Debug/* /project/output
+        cp -r /project/configs/addons/InventoryManager/* /project/output &&
+        cp -r /project/InventoryManager/bin/Debug/* /project/output
       "

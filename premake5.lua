@@ -14,4 +14,4 @@ workspace "FUNPLAY-CS2"
 
    include(path.join("premake", "spdlog.lua"))
 
-   include(path.join("Core", "premake5.lua"))
+   include(path.join("InventoryManager", "premake5.lua"))
