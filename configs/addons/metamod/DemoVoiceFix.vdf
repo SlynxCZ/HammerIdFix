@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"DemoVoiceFix"
+	"file"	"addons/DemoVoiceFix/bin/linuxsteamrt64/DemoVoiceFix"
+}

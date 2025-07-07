@@ -15,5 +15,4 @@ workspace "FUNPLAY-CS2"
    location "build"
 
    include(path.join("premake", "spdlog.lua"))
-   include(path.join("premake", "ixwebsocket.lua"))
-   include(path.join("InventoryManager", "premake5.lua"))
+   include(path.join("DemoVoiceFix", "premake5.lua"))
