@@ -26,7 +26,7 @@ void RegisterVirtualHook(const char* name, void* target, void* detour, T** tramp
 template<typename T>
 T* GetDummyInstance();
 
-#define DEMO_HOOK_COMMAND(commandName, functionName)                      \
+#define HMR_HOOK_COMMAND(commandName, functionName)                      \
     static void functionName(const CCommand& args);                       \
     struct functionName##_HookRegistrar {                                 \
         functionName##_HookRegistrar() {                                  \
@@ -36,7 +36,7 @@ T* GetDummyInstance();
     static functionName##_HookRegistrar functionName##_registrar;         \
     static void functionName(const CCommand& args)
 
-#define DEMO_HOOK_GAMEEVENT(eventName, functionName)                      \
+#define HMR_HOOK_GAMEEVENT(eventName, functionName)                      \
     static void functionName(IGameEvent* ev);                             \
     struct functionName##_GameEventRegistrar {                            \
         functionName##_GameEventRegistrar() {                             \
@@ -46,7 +46,7 @@ T* GetDummyInstance();
     static functionName##_GameEventRegistrar functionName##_registrar;    \
     static void functionName(IGameEvent* ev)
 
-#define DEMO_HOOK_VIRTUAL(className, index, returnType, functionName, argsDecl, argsCall) \
+#define HMR_HOOK_VIRTUAL(className, index, returnType, functionName, argsDecl, argsCall) \
     returnType functionName##_impl argsDecl;                                              \
     returnType (*functionName##_trampoline) argsDecl = nullptr;                           \
     returnType functionName argsDecl { return functionName##_impl argsCall; }             \

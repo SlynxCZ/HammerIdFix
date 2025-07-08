@@ -3,7 +3,7 @@
 // Copyright (c) 2025 slynxcz. All rights reserved.
 //
 #include "globals.h"
-#include "DemoVoiceFix/src/DemoVoiceFix.h"
+#include "DemoVoiceFix.h"
 #include "iserver.h"
 
 #include <ISmmPlugin.h>
@@ -15,7 +15,7 @@
 #include "virtual.h"
 #include "memory.h"
 #include "memory_module.h"
-#include "DemoVoiceFix/src/cs2_sdk/interfaces/cs2_interfaces.h"
+#include "cs2_sdk/interfaces/cs2_interfaces.h"
 #include <game/server/iplayerinfo.h>
 #include <entity2/entitysystem.h>
 
@@ -99,7 +99,7 @@ namespace DemoVoiceFix {
                 modules::server->FindSignature(globals::gameConfig->GetSignature("CGameEventManager_Init")));
 
             if (GameEventManagerInit == nullptr) {
-                DEMO_ERROR("Failed to find signature for \'GameEventManagerInit\'");
+                HMR_ERROR("Failed to find signature for \'GameEventManagerInit\'");
                 return;
             }
 

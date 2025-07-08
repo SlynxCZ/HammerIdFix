@@ -29,6 +29,6 @@ class CGameResourceService
     CGameEntitySystem* GetGameEntitySystem()
     {
         return *reinterpret_cast<CGameEntitySystem**>((uintptr_t)(this) +
-                                                      DemoVoiceFix::globals::gameConfig->GetOffset("GameEntitySystem"));
+                                                      HammerIdFix::globals::gameConfig->GetOffset("GameEntitySystem"));
     }
 };

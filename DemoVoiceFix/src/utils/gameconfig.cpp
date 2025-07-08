@@ -101,7 +101,7 @@ const char* CGameConfig::GetSymbol(const char* name)
 
     if (!symbol || strlen(symbol) <= 1)
     {
-        DEMO_ERROR("Missing symbol: {}\n", name);
+        HMR_ERROR("Missing symbol: {}\n", name);
         return nullptr;
     }
     return symbol + 1;
@@ -129,7 +129,7 @@ int CGameConfig::GetOffset(const std::string& name)
 
 void* CGameConfig::GetAddress(const std::string& name, void* engine, void* server, char* error, int maxlen)
 {
-    DEMO_ERROR("Not implemented.");
+    HMR_ERROR("Not implemented.");
     return nullptr;
 }
 
@@ -154,7 +154,7 @@ bool CGameConfig::IsSymbol(const char* name)
     const char* sigOrSymbol = this->GetSignature(name);
     if (!sigOrSymbol || strlen(sigOrSymbol) <= 0)
     {
-        DEMO_ERROR("Missing signature or symbol: {}\n", name);
+        HMR_ERROR("Missing signature or symbol: {}\n", name);
         return false;
     }
     return sigOrSymbol[0] == '@';
@@ -165,7 +165,7 @@ void* CGameConfig::ResolveSignature(const char* name)
     modules::CModule** module = this->GetModule(name);
     if (!module || !(*module))
     {
-        DEMO_ERROR("Invalid Module {}\n", name);
+        HMR_ERROR("Invalid Module {}\n", name);
         return nullptr;
     }
 
@@ -175,7 +175,7 @@ void* CGameConfig::ResolveSignature(const char* name)
         const char* symbol = this->GetSymbol(name);
         if (!symbol)
         {
-            DEMO_ERROR("Invalid symbol for {}\n", name);
+            HMR_ERROR("Invalid symbol for {}\n", name);
             return nullptr;
         }
         address = (*module)->FindSymbol(symbol);
@@ -185,7 +185,7 @@ void* CGameConfig::ResolveSignature(const char* name)
         const char* signature = this->GetSignature(name);
         if (!signature)
         {
-            DEMO_ERROR("Failed to find signature for {}\n", name);
+            HMR_ERROR("Failed to find signature for {}\n", name);
             return nullptr;
         }
 
@@ -194,7 +194,7 @@ void* CGameConfig::ResolveSignature(const char* name)
 
     if (!address)
     {
-        DEMO_ERROR("Failed to find address for {}\n", name);
+        HMR_ERROR("Failed to find address for {}\n", name);
         return nullptr;
     }
     return address;

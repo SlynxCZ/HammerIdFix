@@ -1,16 +1,31 @@
-//
-// Created by Michal Přikryl on 20.06.2025.
-// Copyright (c) 2025 slynxcz. All rights reserved.
-//
+/**
+ * =============================================================================
+ * CS2Fixes
+ * Copyright (C) 2023 Source2ZE
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "schema.h"
 
 #include "interfaces/cs2_interfaces.h"
-#include "DemoVoiceFix/src/utils/globals.h"
-#include "DemoVoiceFix/src/utils/memory.h"
-#include "DemoVoiceFix/src/utils/log.h"
+#include "utils/globals.h"
+#include "utils/memory.h"
+#include "utils/log.h"
 
 #include "tier1/utlmap.h"
-#include <schemasystem/schemasystem.h>
+#include <schemasystem.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

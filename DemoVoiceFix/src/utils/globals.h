@@ -4,8 +4,6 @@
 //
 #pragma once
 
-#include <tier1/convar.h>
-
 #include <sourcehook/sourcehook.h>
 
 #include <memory>
@@ -14,7 +12,8 @@
 #include "ISmmAPI.h"
 #include "eiface.h"
 #include "iserver.h"
-#include "DemoVoiceFix/src/DemoVoiceFix.h"
+#include "DemoVoiceFix.h"
+#include <entity2/entitysystem.h>
 
 class IGameEventManager2;
 class IPlayerInfoManager;

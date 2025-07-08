@@ -22,7 +22,6 @@
 #include <sourcehook.h>
 #include <funchook.h>
 #include "utils/extends/CCSPlayerController.h"
-#include <link.h>
 #include <cstring>
 #include <cstdint>
 #include <stdio.h>
@@ -35,7 +34,7 @@
 
 PLUGIN_EXPOSE(DemoVoiceFixPlugin, DemoVoiceFix::gPlugin);
 
-CGameEntitySystem *GameEntitySystem() { return nullptr; }
+CGameEntitySystem *GameEntitySystem() { return DemoVoiceFix::globals::entitySystem; }
 
 class GameSessionConfiguration_t {
 };
@@ -82,25 +81,22 @@ namespace DemoVoiceFix {
         char conf_error[255] = "";
 
         if (!globals::gameConfig->Init(conf_error, sizeof(conf_error))) {
-            DEMO_ERROR("Could not read '{}'. Error: {}", gamedata_path, conf_error);
+            HMR_ERROR("Could not read '{}'. Error: {}", gamedata_path, conf_error);
             return false;
         }
 
         globals::Initialize();
-        DEMO_INFO("- [ Globals loaded. ] -");
+        HMR_INFO("- [ Globals loaded. ] -");
 
         SH_ADD_HOOK(INetworkServerService, StartupServer, globals::networkServerService,
                     SH_MEMBER(this, &DemoVoiceFixPlugin::StartupServer), true);
         SH_ADD_HOOK(IServerGameDLL, GameFrame, globals::server, SH_MEMBER(this, &DemoVoiceFixPlugin::GameFrame), true);
-        DEMO_INFO("- [ Hooks declared . ] -");
+        HMR_INFO("- [ Hooks declared . ] -");
 
         globals::mmPlugin = &gPlugin;
 
-        g_pCVar = globals::cvars;
-        ConVar_Register(FCVAR_RELEASE | FCVAR_CLIENT_CAN_EXECUTE | FCVAR_GAMEDLL);
-
         g_pluginRegistered = true;
-        DEMO_INFO("- [ [DemoVoiceFixPlugin] loaded. ] -");
+        HMR_INFO("- [ [DemoVoiceFixPlugin] loaded. ] -");
         return true;
     }
 
@@ -113,7 +109,7 @@ namespace DemoVoiceFix {
         globals::gameEventManager->RemoveListener(&globals::OnRoundStart);
 
         g_pluginRegistered = false;
-        DEMO_INFO("- [ [DemoVoiceFixPlugin] unloaded. ] -");
+        HMR_INFO("- [ [DemoVoiceFixPlugin] unloaded. ] -");
         return true;
     }
 
@@ -121,9 +117,9 @@ namespace DemoVoiceFix {
         std::thread([] {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             if (g_pluginRegistered)
-                DEMO_INFO("- [ [DemoVoiceFixPlugin] is active and linked. ] -");
+                HMR_INFO("- [ [DemoVoiceFixPlugin] is active and linked. ] -");
             else
-                DEMO_ERROR("- [ [DemoVoiceFixPlugin] plugin did not register itself. ] -");
+                HMR_ERROR("- [ [DemoVoiceFixPlugin] plugin did not register itself. ] -");
         }).detach();
     }
 
@@ -132,7 +128,7 @@ namespace DemoVoiceFix {
         static bool bDone = false;
         if (!bDone) {
             globals::gameEventManager->AddListener(&globals::OnRoundStart, "round_start", true);
-            DEMO_INFO("- [ Hooks added . ] -");
+            HMR_INFO("- [ Hooks added . ] -");
             bDone = true;
         }
     }
@@ -145,20 +141,35 @@ namespace DemoVoiceFix {
     }
 
     void FixHltvVoiceChat() {
-        DEMO_INFO("ROUNDSTART");
+        HMR_INFO("ROUNDSTART");
 
-        for (int i = 0; i < globals::getGlobalVars()->maxClients; ++i) {
-            CCSPlayerController *player = CCSPlayerController::FromSlot(i);
-            if (!player)
+        if (!globals::entitySystem) {
+            HMR_ERROR("entitySystem == nullptr!");
+            return;
+        }
+
+        CGlobalVars* vars = globals::getGlobalVars();
+        if (!vars) {
+            HMR_ERROR("globalVars == nullptr!");
+            return;
+        }
+
+        HMR_INFO("About to test FromSlot...");
+
+        for (int i = 0; i < vars->maxClients; ++i) {
+            HMR_INFO("Slot {}", i);
+
+            // Test only the call, wrapped safely
+            CCSPlayerController* player = nullptr;
+            try {
+                player = CCSPlayerController::FromSlot(i);
+            } catch (...) {
+                HMR_ERROR("Exception while calling FromSlot({})", i);
                 continue;
+            }
 
-            //DEMO_INFO("ROUNDSTART: {}", player->GetPlayerName());
-
-            // if (player->GetPlayerName() == "FUNPLAY.pro [CSTV]" && !player->IsAlive()) {
-            //     player->m_fFlags.Set(1 << 1 | 1 << 2);
-            //     DEMO_INFO("Applied VoiceFlags to HLTV bot slot {}", i);
-            //     return;
-            // }
+            if (player)
+                HMR_INFO("Slot {} OK: {}", i, player->GetPlayerName());
         }
     }
 

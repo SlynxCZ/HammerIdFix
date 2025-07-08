@@ -30,7 +30,6 @@
 #include "log.h"
 #include "metamod_oslink.h"
 #include <funchook.h>
-#include <sys/mman.h>
 
 namespace DemoVoiceFix::modules {
     void Initialize() {
@@ -102,7 +101,7 @@ namespace DemoVoiceFix::modules {
         });
 
         if (it == moduleList.end()) {
-            DEMO_ERROR("Cannot find module {}", name);
+            HMR_ERROR("Cannot find module {}", name);
 
             return nullptr;
         }
@@ -146,7 +145,7 @@ CModule::CModule(std::string_view path, std::uint64_t base)
         std::ifstream stream(m_pszPath, std::ios::in | std::ios::binary);
         if (!stream.good())
         {
-            DEMO_ERROR("Cannot open file {}", m_pszPath);
+            HMR_ERROR("Cannot open file {}", m_pszPath);
             return;
         }
         disk_data.reserve(std::filesystem::file_size(m_pszPath));
@@ -175,11 +174,11 @@ CModule::CModule(std::string_view path, std::uint64_t base)
             {
                 if (auto bytes = GetOriginalBytes(disk_data, start - m_baseAddress, size))
                 {
-                    DEMO_INFO("Copying bytes from disk for {}", m_pszPath);
+                    HMR_INFO("Copying bytes from disk for {}", m_pszPath);
                     segment.bytes = bytes.value();
                     continue;
                 }
-                DEMO_ERROR("Cannot get original bytes for {}", m_pszPath);
+                HMR_ERROR("Cannot get original bytes for {}", m_pszPath);
                 return;
             }
 
@@ -208,7 +207,7 @@ CModule::CModule(std::string_view path, std::uint64_t base)
         if (should_read_from_disk) {
             std::ifstream stream(m_pszPath, std::ios::in | std::ios::binary);
             if (!stream.good()) {
-                DEMO_ERROR("Cannot open file {}", m_pszPath);
+                HMR_ERROR("Cannot open file {}", m_pszPath);
                 return;
             }
             disk_data.reserve(std::filesystem::file_size(m_pszPath));
@@ -243,11 +242,11 @@ CModule::CModule(std::string_view path, std::uint64_t base)
 
             if (should_read_from_disk) {
                 if (auto bytes = GetOriginalBytes(disk_data, address - m_baseAddress, size)) {
-                    DEMO_INFO("Copying bytes from disk for {}", m_pszPath);
+                    HMR_INFO("Copying bytes from disk for {}", m_pszPath);
                     segment.bytes = bytes.value();
                     continue;
                 }
-                DEMO_ERROR("Cannot get original bytes for {}", m_pszPath);
+                HMR_ERROR("Cannot get original bytes for {}", m_pszPath);
                 return;
             }
 
@@ -429,7 +428,7 @@ void CModule::DumpSymbols()
         auto pData = CGameConfig::HexToByte(signature);
         if (pData.empty()) [[unlikely]]
         {
-            DEMO_ERROR("Cannot convert signture \"{}\" to bytes", signature);
+            HMR_ERROR("Cannot convert signture \"{}\" to bytes", signature);
             return nullptr;
         }
 
@@ -500,7 +499,7 @@ void CModule::DumpSymbols()
 
             if (ret_interface == nullptr) {
                 // Replace Error() from hl2sdk-cs2, it essentially calls Plat_ExitProcess
-                DEMO_ERROR("Could not find interface {} in {}", name, m_pszModule);
+                HMR_ERROR("Could not find interface {} in {}", name, m_pszModule);
                 Plat_ExitProcess(1);
             }
 
@@ -510,7 +509,7 @@ void CModule::DumpSymbols()
         const auto it = _interfaces.find(name.data());
 
         if (it == _interfaces.end()) {
-            DEMO_ERROR("Could not find interface {} in {}", name, m_pszModule);
+            HMR_ERROR("Could not find interface {} in {}", name, m_pszModule);
             Plat_ExitProcess(1);
         }
 
@@ -522,7 +521,7 @@ void CModule::DumpSymbols()
             return reinterpret_cast<void *>(it->second);
         }
 
-        DEMO_ERROR("Cannot find symbol {}", name);
+        HMR_ERROR("Cannot find symbol {}", name);
         return nullptr;
     }
 } // namespace DemoVoiceFix::modules

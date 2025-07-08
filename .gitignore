@@ -109,7 +109,7 @@ dlldata.c
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
-# .NET DemoVoiceFix
+# .NET HammerIdFix
 project.lock.json
 project.fragment.lock.json
 artifacts/

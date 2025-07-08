@@ -14,7 +14,7 @@
 #endif
 
 namespace DemoVoiceFix {
-    std::shared_ptr<spdlog::logger> Log::m_DEMO_logger;
+    std::shared_ptr<spdlog::logger> Log::m_HMR_logger;
 
     void Log::Init() {
 #if defined(_WIN32)
@@ -35,16 +35,16 @@ namespace DemoVoiceFix {
         sinks.emplace_back(color_sink);
         sinks.emplace_back(file_sink);
 
-        m_DEMO_logger = std::make_shared<spdlog::logger>("DemoVoiceFix", sinks.begin(), sinks.end());
-        register_logger(m_DEMO_logger);
-        m_DEMO_logger->set_level(spdlog::level::trace);
-        m_DEMO_logger->flush_on(spdlog::level::info);
+        m_HMR_logger = std::make_shared<spdlog::logger>("DemoVoiceFix", sinks.begin(), sinks.end());
+        register_logger(m_HMR_logger);
+        m_HMR_logger->set_level(spdlog::level::trace);
+        m_HMR_logger->flush_on(spdlog::level::info);
 
         spdlog::cfg::load_env_levels();
     }
 
     void Log::Close() {
         spdlog::drop("DemoVoiceFix");
-        m_DEMO_logger.reset();
+        m_HMR_logger.reset();
     }
 }

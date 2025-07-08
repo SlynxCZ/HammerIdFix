@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"HammerIdFix"
+	"file"	"addons/HammerIdFix/bin/linuxsteamrt64/HammerIdFix"
+}

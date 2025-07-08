@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"HammerIdFix"
+	"file"	"addons/HammerIdFix/bin/${HammerIdFix_VDF_PLATFORM}/HammerIdFix"
+}

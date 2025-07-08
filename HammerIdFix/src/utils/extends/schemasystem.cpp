@@ -22,7 +22,7 @@
 #define MODULE_EXT ".so"
 #endif
 
-namespace DemoVoiceFix {
+namespace HammerIdFix {
 extern CGlobalVars *gpGlobals;
 
 using SchemaKeyValueMap_t = CUtlMap<uint32_t, SchemaKey>;
