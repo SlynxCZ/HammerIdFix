@@ -32,6 +32,7 @@
 #include <entity2/entitysystem.h>
 #include "utils/vfunc.h"
 #include "utils/extends/CBaseEntity.h"
+#include "unordered_set"
 
 #ifdef _WIN32
 #include <windows.h>
