@@ -11,4 +11,4 @@ add_subdirectory(vendor/dyncall)
 add_subdirectory(vendor/funchook)
 
 add_subdirectory(HammerIdFix)
-add_subdirectory(DemoVoiceFix)
+
